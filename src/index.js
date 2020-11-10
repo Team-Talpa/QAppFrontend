@@ -1,17 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import QList from "./Qlist";
+  
+var destination = document.querySelector("#container")
+  
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <div>
+        <p>Kerro lemppariruoka</p>
+        <QList/>
+        <p>Kerro lemppariväri</p>
+        <QList/>
+        <p>Kerro henkilöturvatunnus</p>
+        <QList/>
+    </div>,
+    destination
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
