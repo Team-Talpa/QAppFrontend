@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+
 
 function Questionlist(props) {
- // const [survey, setSurvey] = useState({surveyHeader: ''});
-  const [questions, setQuestions] = useState([]);
-  
-  useEffect(() => {
-    getQuestions();
-  }, [])
 
-
-  const getQuestions = () => {
-    fetch('http://localhost:8080/surveys/1')
-    .then(response => response.json())
-    .then(data => setQuestions(data))
-    .catch(err => console.error(err))
-  }
- 
-  //const inputChanged = (event) => {
-    //setCar({...car, [event.target.name]: event.target.value});
- // }
- 
   return (
     <div>
+      <h1>{props.params.surveyHeader}</h1>
       <table><tbody>
       {
-      questions.map((question, index) => 
-        <tr key={index}>
-          <td>{question.questionBody}</td>
-        </tr>)
+        props.params.questions.map((q, index) => 
+          <tr key={index}>
+            <td>{q.questionBody}</td>
+            <input type='text' />
+          </tr>)
       }
       </tbody></table>
     </div>
