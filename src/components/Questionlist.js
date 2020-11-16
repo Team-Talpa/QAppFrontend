@@ -5,10 +5,11 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
- 
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 function Questionlist(props) {
  const [questions, setQuestions] = useState([]);
- const [answer, setAnswer] = useState('');
+ const [answer, setAnswer] = useState({answerBody: '', question: ''});
  const [open, setOpen] = useState(false);
  
  const handleClickOpen = () => {
@@ -19,10 +20,11 @@ function Questionlist(props) {
  const handleClose = () => {
    setOpen(false);
  };
- 
- const inputChanged = (event) => {
-   setAnswer(event.target.value);
+
+ const handleSave = () => {
+   props.answerQ(answer);
  }
+  
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -33,21 +35,38 @@ function Questionlist(props) {
         <DialogContent>
         {
         questions.map((q, index) => 
-          <TextField
+            <TextField
+            key={index}
             margin="dense"
             name="answerBody"
-            value={answer}
-            onChange={inputChanged}
+            value={answer.answerBody}
+            onChange={(event) => {
+              setAnswer({answerBody: event.target.value, question: q.questionId});
+            }}
             label={q.questionBody}
             fullWidth
-          />)
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <Button color="default" onClick={handleSave}>
+                    Save
+                  </Button>
+                </InputAdornment>
+                 ),
+                }}
+            />
+        
+          )
+          
         }
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-
+          <Button color="default" onClick={handleClose}>
+            Save
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

@@ -15,6 +15,14 @@ function Surveylist() {
     .catch(err => console.error(err))
   }
 
+  const answerQuestion= (answer) => {
+  fetch('http://localhost:8080/saveanswer', {
+      method: 'POST',
+      headers: {'Content-type' : 'application/json' },
+      body: JSON.stringify(answer)      
+    })
+    .catch(err => console.error(err))
+  }
   return (
     <div>
             <table><tbody>
@@ -22,7 +30,7 @@ function Surveylist() {
             surveys.map((s, index) => 
               <tr key={index}>
                 <td>{s.surveyHeader}</td>
-                <td><Questionlist params={s} /></td>
+                <td><Questionlist params={s} answerQ={answerQuestion} /></td>
               </tr>)
             }
             </tbody></table>
