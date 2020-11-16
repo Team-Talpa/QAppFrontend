@@ -1,35 +1,55 @@
-import React, { useState, useEffect } from 'react';
-
+import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+ 
 function Questionlist(props) {
- // const [survey, setSurvey] = useState({surveyHeader: ''});
-  const [questions, setQuestions] = useState([]);
-  
-  useEffect(() => {
-    getQuestions();
-  }, [])
-
-
-  const getQuestions = () => {
-    fetch('http://localhost:8080/surveys/1')
-    .then(response => response.json())
-    .then(data => setQuestions(data))
-    .catch(err => console.error(err))
-  }
+ const [questions, setQuestions] = useState([]);
+ const [answer, setAnswer] = useState('');
+ const [open, setOpen] = useState(false);
  
-  //const inputChanged = (event) => {
-    //setCar({...car, [event.target.name]: event.target.value});
- // }
+ const handleClickOpen = () => {
+   setQuestions(props.params.questions);
+   setOpen(true);
+ };
+
+ const handleClose = () => {
+   setOpen(false);
+ };
  
+ const inputChanged = (event) => {
+   setAnswer(event.target.value);
+ }
   return (
     <div>
-      <table><tbody>
-      {
-      questions.map((question, index) => 
-        <tr key={index}>
-          <td>{question.questionBody}</td>
-        </tr>)
-      }
-      </tbody></table>
+      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+        Answer
+      </Button>
+      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">{props.params.surveyHeader}</DialogTitle>
+        <DialogContent>
+        {
+        questions.map((q, index) => 
+          <TextField
+            margin="dense"
+            name="answerBody"
+            value={answer}
+            onChange={inputChanged}
+            label={q.questionBody}
+            fullWidth
+          />)
+        }
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
