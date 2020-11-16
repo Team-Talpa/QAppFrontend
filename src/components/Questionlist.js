@@ -5,7 +5,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
- 
+import InputAdornment from '@material-ui/core/InputAdornment';
+
 function Questionlist(props) {
  const [questions, setQuestions] = useState([]);
  const [answer, setAnswer] = useState('');
@@ -21,7 +22,8 @@ function Questionlist(props) {
  };
  
  const inputChanged = (event) => {
-   setAnswer(event.target.value);
+  
+   setAnswer(event.target.questionBody);
  }
   return (
     <div>
@@ -40,14 +42,23 @@ function Questionlist(props) {
             onChange={inputChanged}
             label={q.questionBody}
             fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <Button color="default">
+                    Save
+                  </Button>
+                </InputAdornment>
+                 ),
+                }}
           />)
         }
+        
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-
         </DialogActions>
       </Dialog>
     </div>
