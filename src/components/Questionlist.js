@@ -12,6 +12,7 @@ function Questionlist(props) {
  const [answer, setAnswer] = useState({answerBody: '', question: ''});
  const [open, setOpen] = useState(false);
  
+ 
  const handleClickOpen = () => {
    setQuestions(props.params.questions);
    setOpen(true);
@@ -24,6 +25,8 @@ function Questionlist(props) {
  const handleSave = () => {
    props.answerQ(answer);
  }
+
+
   
   return (
     <div>
@@ -39,11 +42,13 @@ function Questionlist(props) {
             key={index}
             margin="dense"
             name="answerBody"
-            value={answer.answerBody}
-            onChange={(event) => {
-              setAnswer({answerBody: event.target.value, question: q.questionId});
-            }}
             label={q.questionBody}
+            value={answer.answerBody}
+           
+            onChange={(event) => {
+              setAnswer({answerBody: event.target.questionBody, question: q.questionId});
+            }}
+            
             fullWidth
             InputProps={{
               endAdornment: (
