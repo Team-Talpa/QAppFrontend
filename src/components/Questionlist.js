@@ -9,7 +9,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 function Questionlist(props) {
  const [questions, setQuestions] = useState([]);
- const [answer, setAnswer] = useState({answerBody: '', question: ''});
+ const [answer, setAnswer] = useState({answerBody: '', question: {}});
  const [open, setOpen] = useState(false);
  
  
@@ -23,6 +23,7 @@ function Questionlist(props) {
  };
 
  const handleSave = () => {
+   
    props.answerQ(answer);
  }
 
@@ -46,7 +47,7 @@ function Questionlist(props) {
             value={answer.answerBody}
            
             onChange={(event) => {
-              setAnswer({answerBody: event.target.questionBody, question: q.questionId});
+              setAnswer({answerBody: event.target.value, question: {questionId: q.questionId}});
             }}
             
             fullWidth
@@ -69,9 +70,7 @@ function Questionlist(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button color="default" onClick={handleClose}>
-            Save
-          </Button>
+
         </DialogActions>
       </Dialog>
     </div>
