@@ -30,7 +30,7 @@ function Surveylist() {
             surveys.map((s, index) => 
               <tr key={index}>
                 <td>{s.surveyHeader}</td>
-                <td><Questionlist params={s} answerQ={answerQuestion} /></td>
+                <td><Questionlist params={s} answerQ={answerQuestion}/></td>
               </tr>)
             }
             </tbody></table>
