@@ -29,9 +29,11 @@ function Questionlist(props) {
    
    handleReset();
 
-   //console.log(answer[Object.keys(answer)])
-   //console.log('answer', answer)
-   //console.log(answer[0])
+   console.log(answer);
+   console.log(answer[0])
+   console.log('answer', answer)
+   console.log(answer[Object.keys(answer)])
+
    //console.log(Object.keys(answer))
  }
 
