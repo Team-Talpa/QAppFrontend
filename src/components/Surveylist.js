@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Questionlist from './Questionlist';
+import Answerlist from './Answerlist';
 
 function Surveylist() {
   const [surveys, setSurveys] = useState([]);
@@ -31,6 +32,7 @@ function Surveylist() {
               <tr key={index}>
                 <td>{s.surveyHeader}</td>
                 <td><Questionlist params={s} answerQ={answerQuestion}/></td>
+                <td><Answerlist params={s} /></td>
               </tr>)
             }
             </tbody></table>
