@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import Questionlist from './Questionlist';
 import Answerlist from './Answerlist';
+import Button from '@material-ui/core/Button';
 
 function Surveylist() {
   const [surveys, setSurveys] = useState([]);
@@ -32,7 +34,15 @@ function Surveylist() {
               <tr key={index}>
                 <td>{s.surveyHeader}</td>
                 <td><Questionlist params={s} answerQ={answerQuestion}/></td>
-                <td><Answerlist params={s} /></td>
+                <td><Button variant="outlined" color="primary" onClick={() => {
+                  ReactDOM.render(
+                    <Answerlist params={s} />,
+                    document.getElementById('root')
+                  );
+                }}>
+                  View answers
+
+                </Button></td>
               </tr>)
             }
             </tbody></table>
