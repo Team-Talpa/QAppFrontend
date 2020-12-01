@@ -11,15 +11,20 @@ function Surveylist() {
     getSurveys();
   }, [])
 
+  //const url = 'https://talpa-qapp.herokuapp.com';
+  const url = 'http://localhost:8080';
+
   const getSurveys = () => {
-    fetch('http://localhost:8080/surveys')
+    //fetch('http://localhost:8080/surveys')
+    fetch(`${url}/surveys`)
     .then(response => response.json())
     .then(data => setSurveys(data))
     .catch(err => console.error(err))
   }
 
   const answerQuestion= (answer) => {
-  fetch('http://localhost:8080/saveanswer', {
+  //fetch('http://localhost:8080/saveanswer', {
+    fetch(`${ url }/saveanswer`, {
       method: 'POST',
       headers: {'Content-type' : 'application/json' },
       body: JSON.stringify(answer)      
