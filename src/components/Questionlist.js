@@ -9,10 +9,12 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 function Questionlist(props) {
  const [questions, setQuestions] = useState([]);
- const [answer, setAnswer] = useState({answerBody: '', question: {}});
+ // const [answer, setAnswer] = useState({answerBody: '', question: {}});
+ const [answer, setAnswer] = useState({});
+ 
  const [open, setOpen] = useState(false);
  
- 
+  
  const handleClickOpen = () => {
    setQuestions(props.params.questions);
    setOpen(true);
@@ -23,12 +25,24 @@ function Questionlist(props) {
  };
 
  const handleSave = () => {
+   props.answerQ(answer[Object.keys(answer)]);
    
-   props.answerQ(answer);
+   handleReset();
+
+   console.log(answer);
+   console.log(answer[0])
+   console.log('answer', answer)
+   console.log(answer[Object.keys(answer)])
+
+   //console.log(Object.keys(answer))
  }
 
+ const handleReset = () => {
+   setAnswer({});
+ }
 
-  
+  //console.log('answer', answer)
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -44,10 +58,22 @@ function Questionlist(props) {
             margin="dense"
             name="answerBody"
             label={q.questionBody}
-            value={answer.answerBody}
+            value={answer[index] ? answer[index].answerBody : ''}
            
             onChange={(event) => {
-              setAnswer({answerBody: event.target.value, question: {questionId: q.questionId}});
+              const newAnswer = {
+                [index]: {
+                  answerBody: event.target.value,
+                  question: {
+                    questionId: q.questionId,
+                  }
+                }
+              }
+              setAnswer(
+                {
+                  ...answer,
+                  ...newAnswer,
+                });
             }}
             
             fullWidth

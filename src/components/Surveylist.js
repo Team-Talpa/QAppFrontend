@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import Questionlist from './Questionlist';
+import Answerlist from './Answerlist';
+import Button from '@material-ui/core/Button';
 
 function Surveylist() {
   const [surveys, setSurveys] = useState([]);
@@ -8,15 +11,20 @@ function Surveylist() {
     getSurveys();
   }, [])
 
+  const url = 'https://talpa-qapp.herokuapp.com';
+  //const url = 'http://localhost:8080';
+
   const getSurveys = () => {
-    fetch('https://talpa-qapp.herokuapp.com/surveys')
+    //fetch('http://localhost:8080/surveys')
+    fetch(`${url}/surveys`)
     .then(response => response.json())
     .then(data => setSurveys(data))
     .catch(err => console.error(err))
   }
 
   const answerQuestion= (answer) => {
-  fetch('https://talpa-qapp.herokuapp.com/saveanswer', {
+  //fetch('http://localhost:8080/saveanswer', {
+    fetch(`${ url }/saveanswer`, {
       method: 'POST',
       headers: {'Content-type' : 'application/json' },
       body: JSON.stringify(answer)      
@@ -30,7 +38,16 @@ function Surveylist() {
             surveys.map((s, index) => 
               <tr key={index}>
                 <td>{s.surveyHeader}</td>
-                <td><Questionlist params={s} answerQ={answerQuestion} /></td>
+                <td><Questionlist params={s} answerQ={answerQuestion}/></td>
+                <td><Button variant="outlined" color="primary" onClick={() => {
+                  ReactDOM.render(
+                    <Answerlist params={s} />,
+                    document.getElementById('root')
+                  );
+                }}>
+                  View answers
+
+                </Button></td>
               </tr>)
             }
             </tbody></table>
