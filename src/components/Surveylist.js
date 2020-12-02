@@ -11,8 +11,8 @@ function Surveylist() {
     getSurveys();
   }, [])
 
-  const url = 'https://talpa-qapp.herokuapp.com';
-  //const url = 'http://localhost:8080';
+  //const url = 'https://talpa-qapp.herokuapp.com';
+  const url = 'http://localhost:8080';
 
   const getSurveys = () => {
     //fetch('http://localhost:8080/surveys')
