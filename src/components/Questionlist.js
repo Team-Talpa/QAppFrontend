@@ -6,15 +6,18 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
 function Questionlist(props) {
  const [questions, setQuestions] = useState([]);
- // const [answer, setAnswer] = useState({answerBody: '', question: {}});
- const [answer, setAnswer] = useState({});
- 
+ const [answer, setAnswer] = useState({answerBody: '', question: ''});
  const [open, setOpen] = useState(false);
  
-  
+ 
  const handleClickOpen = () => {
    setQuestions(props.params.questions);
    setOpen(true);
@@ -25,24 +28,9 @@ function Questionlist(props) {
  };
 
  const handleSave = () => {
-   props.answerQ(answer[Object.keys(answer)]);
-   
-   handleReset();
-
-   console.log(answer);
-   console.log(answer[0])
-   console.log('answer', answer)
-   console.log(answer[Object.keys(answer)])
-
-   //console.log(Object.keys(answer))
- }
-
- const handleReset = () => {
-   setAnswer({});
- }
-
-  //console.log('answer', answer)
-
+   props.answerQ(answer);
+ };
+  
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -52,28 +40,17 @@ function Questionlist(props) {
         <DialogTitle id="form-dialog-title">{props.params.surveyHeader}</DialogTitle>
         <DialogContent>
         {
-        questions.map((q, index) => 
+        questions.map((q, index) => { // questionTypeId 4 = checkbox, joten tässä pitäisi oikeasti renderöidä checkbox komponentti
+          return q.questionType.questionTypeId === 4 ?
             <TextField
             key={index}
             margin="dense"
             name="answerBody"
             label={q.questionBody}
-            value={answer[index] ? answer[index].answerBody : ''}
-           
+            
+            value={answer.answerBody}
             onChange={(event) => {
-              const newAnswer = {
-                [index]: {
-                  answerBody: event.target.value,
-                  question: {
-                    questionId: q.questionId,
-                  }
-                }
-              }
-              setAnswer(
-                {
-                  ...answer,
-                  ...newAnswer,
-                });
+              setAnswer({answerBody: event.target.value, question: q.questionId});
             }}
             
             fullWidth
@@ -87,7 +64,16 @@ function Questionlist(props) {
                  ),
                 }}
             />
-        
+            :
+            <FormControl component="fieldset">
+              <FormLabel component="legend">{q.questionBody}</FormLabel>
+              <RadioGroup aria-label="answerOptions" name="answerOptions1">
+                {
+                q.answerOptions.map(a, index) => 
+                  <FormControlLabel value={a.answerOptionId} control={<Radio />} label={a.answerOptionBody}/>}
+              </RadioGroup>
+            </FormControl>
+            }
           )
           
         }
@@ -96,7 +82,6 @@ function Questionlist(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-
         </DialogActions>
       </Dialog>
     </div>
