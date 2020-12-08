@@ -51,9 +51,14 @@ function Questionlist(props) {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{props.params.surveyHeader}</DialogTitle>
         <DialogContent>
+        
         {
-        questions.map((q, index) => 
-            <TextField
+        questions.map((q, index) => {
+
+        if(q.questionType.questionTypeId === 2) {
+          return (
+        // if-lause, jos questiontype on 2 => textfield
+          <TextField
             key={index}
             margin="dense"
             name="answerBody"
@@ -84,12 +89,24 @@ function Questionlist(props) {
                     Save
                   </Button>
                 </InputAdornment>
-                 ),
+                 )
                 }}
-            />
-        
-          )
-          
+            />)}
+            
+            else if(q.questionType.questionTypeId === 3) {
+              return (
+                <h1>moi</h1>
+              )
+            }
+            
+            else {
+              return (
+              <h2>hei</h2>
+              )
+            }
+
+
+        })   
         }
         </DialogContent>
         <DialogActions>
