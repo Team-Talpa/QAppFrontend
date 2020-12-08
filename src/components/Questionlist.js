@@ -39,10 +39,20 @@ function Questionlist(props) {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{props.params.surveyHeader}</DialogTitle>
         <DialogContent>
+        
         {
+<<<<<<< HEAD
         questions.map((q, index) => { // questionTypeId 4 = checkbox, joten tässä pitäisi oikeasti renderöidä checkbox komponentti
           return q.questionType.questionTypeId === 4 ?
             <TextField
+=======
+        questions.map((q, index) => {
+
+        if(q.questionType.questionTypeId === 2) {
+          return (
+        // if-lause, jos questiontype on 2 => textfield
+          <TextField
+>>>>>>> e1ea17647a5b2fca48661e30170371a04c6eb966
             key={index}
             margin="dense"
             name="answerBody"
@@ -61,8 +71,9 @@ function Questionlist(props) {
                     Save
                   </Button>
                 </InputAdornment>
-                 ),
+                 )
                 }}
+<<<<<<< HEAD
             />
             :
             <FormControl component="fieldset">
@@ -76,6 +87,24 @@ function Questionlist(props) {
             }
           )
           
+=======
+            />)}
+            
+            else if(q.questionType.questionTypeId === 3) {
+              return (
+                <h1>moi</h1>
+              )
+            }
+            
+            else {
+              return (
+              <h2>hei</h2>
+              )
+            }
+
+
+        })   
+>>>>>>> e1ea17647a5b2fca48661e30170371a04c6eb966
         }
         </DialogContent>
         <DialogActions>
