@@ -39,72 +39,51 @@ function Questionlist(props) {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">{props.params.surveyHeader}</DialogTitle>
         <DialogContent>
-        
         {
-<<<<<<< HEAD
-        questions.map((q, index) => { // questionTypeId 4 = checkbox, joten tässä pitäisi oikeasti renderöidä checkbox komponentti
-          return q.questionType.questionTypeId === 4 ?
-            <TextField
-=======
-        questions.map((q, index) => {
-
-        if(q.questionType.questionTypeId === 2) {
-          return (
-        // if-lause, jos questiontype on 2 => textfield
-          <TextField
->>>>>>> e1ea17647a5b2fca48661e30170371a04c6eb966
-            key={index}
-            margin="dense"
-            name="answerBody"
-            label={q.questionBody}
-            
-            value={answer.answerBody}
-            onChange={(event) => {
-              setAnswer({answerBody: event.target.value, question: q.questionId});
-            }}
-            
-            fullWidth
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position='end'>
-                  <Button color="default" onClick={handleSave}>
-                    Save
-                  </Button>
-                </InputAdornment>
-                 )
+        questions.map((q, index) => { 
+          if(q.questionType.questionTypeId === 2) {
+            return (
+              <TextField
+                key={index}
+                margin="dense"
+                name="answerBody"
+                label={q.questionBody}
+                
+                value={answer.answerBody}
+                onChange={(event) => {
+                  setAnswer({answerBody: event.target.value, question: q.questionId});
                 }}
-<<<<<<< HEAD
-            />
-            :
-            <FormControl component="fieldset">
-              <FormLabel component="legend">{q.questionBody}</FormLabel>
-              <RadioGroup aria-label="answerOptions" name="answerOptions1">
-                {
-                q.answerOptions.map(a, index) => 
-                  <FormControlLabel value={a.answerOptionId} control={<Radio />} label={a.answerOptionBody}/>}
-              </RadioGroup>
-            </FormControl>
+                
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <Button color="default" onClick={handleSave}>
+                        Save
+                      </Button>
+                    </InputAdornment>
+                    )
+                    }}
+                />
+            )} else if(q.questionType.questionTypeId === 3) {
+              return (
+                <FormControl component="fieldset">
+                <FormLabel component="legend">{q.questionBody}</FormLabel>
+                <RadioGroup aria-label="answerOptions" name="answerOptions1">
+                  {
+                  q.answerOptions.map(a, index) => 
+                    <FormControlLabel value={a.answerOptionId} control={<Radio />} label={a.answerOptionBody}/>
+                    }
+                </RadioGroup>
+              </FormControl>
+            )} else {
+              return (
+                <h2>hejsan</h2>
+              )
+            }
             }
           )
           
-=======
-            />)}
-            
-            else if(q.questionType.questionTypeId === 3) {
-              return (
-                <h1>moi</h1>
-              )
-            }
-            
-            else {
-              return (
-              <h2>hei</h2>
-              )
-            }
-
-
-        })   
->>>>>>> e1ea17647a5b2fca48661e30170371a04c6eb966
         }
         </DialogContent>
         <DialogActions>
