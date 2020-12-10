@@ -11,12 +11,13 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
 
 function Questionlist(props) {
  const [questions, setQuestions] = useState([]);
  const [answer, setAnswer] = useState({answerBody: '', question: ''});
  const [open, setOpen] = useState(false);
- 
  
  const handleClickOpen = () => {
    setQuestions(props.params.questions);
@@ -28,9 +29,22 @@ function Questionlist(props) {
  };
 
  const handleSave = () => {
-   props.answerQ(answer);
- };
-  
+  props.answerQ(answer[Object.keys(answer)]);
+   
+  handleReset();
+
+  console.log(answer);
+  console.log(answer[0])
+  console.log('answer', answer)
+  console.log(answer[Object.keys(answer)])
+
+  //console.log(Object.keys(answer))
+}
+
+const handleReset = () => {
+  setAnswer({});
+}
+
   return (
     <div>
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -49,9 +63,21 @@ function Questionlist(props) {
                 name="answerBody"
                 label={q.questionBody}
                 
-                value={answer.answerBody}
+                value={answer[index] ? answer[index].answerBody : ''}
                 onChange={(event) => {
-                  setAnswer({answerBody: event.target.value, question: q.questionId});
+                  const newAnswer = {
+                    [index]: {
+                      answerBody: event.target.value,
+                      question: {
+                        questionId: q.questionId,
+                      }
+                    }
+                  }
+                  setAnswer(
+                    {
+                      ...answer,
+                      ...newAnswer,
+                    });
                 }}
                 
                 fullWidth
@@ -62,23 +88,79 @@ function Questionlist(props) {
                         Save
                       </Button>
                     </InputAdornment>
-                    )
+                     ),
                     }}
                 />
             )} else if(q.questionType.questionTypeId === 3) {
               return (
                 <FormControl component="fieldset">
                 <FormLabel component="legend">{q.questionBody}</FormLabel>
-                <RadioGroup aria-label="answerOptions" name="answerOptions1">
+                <RadioGroup aria-label="answerOptions" 
+                name="answerOptions" 
+                value={answer[index] ? answer[index].answerBody : ''}
+                onChange={(event) => {
+                  const newAnswer = {
+                    [index]: {
+                      answerBody: event.target.value,
+                      question: {
+                        questionId: q.questionId,
+                      }
+                    }
+                  }
+                  setAnswer(
+                    {
+                      ...answer,
+                      ...newAnswer,
+                    });
+                }}
+                >
                   {
-                  q.answerOptions.map(a, index) => 
-                    <FormControlLabel value={a.answerOptionId} control={<Radio />} label={a.answerOptionBody}/>
+                  q.answerOptions.map((a, index) => 
+                    <FormControlLabel value={a.answerOptionBody} control={<Radio />} label={a.answerOptionBody}/>
+                  )
                     }
                 </RadioGroup>
+                <Button color="default" onClick={handleSave}>Save</Button>
               </FormControl>
             )} else {
               return (
-                <h2>hejsan</h2>
+                <FormControl component="fieldset">
+                  <FormLabel component="legend">{q.questionBody}</FormLabel>
+                  <FormGroup>
+                  {
+                  q.answerOptions.map((a, index) => 
+                    /*<FormControlLabel value={a.answerOptionBody} control={<Radio />} label={a.answerOptionBody}/>*/
+                    <FormControlLabel
+                    control={
+                    <Checkbox 
+                    value={a.answerOptionBody}
+                    //value={answer[index] ? answer[index].answerOptionBody : ''} palauttaa tyhjön answerBodyn
+                    //checked={answer[index] ? answer[index].answerBody : ''} //--palauttaa true
+                    //value={answer[index] ? answer[index].q.answerOption.answerOptionBody : ''} //palauttaa tyhjön answerBodyn
+                    name="answerOptions" 
+                    onChange={(event) => {
+                      const newAnswer = {
+                        [index]: {
+                          answerBody: event.target.value,
+                          question: {
+                            questionId: q.questionId,
+                          }
+                        }
+                      }
+                      setAnswer(
+                        {
+                          ...answer,
+                          ...newAnswer,
+                        });
+                    }}
+                    />}
+                    label={a.answerOptionBody}
+                  />
+                    )
+                    }
+                  </FormGroup>
+                  <Button color="default" onClick={handleSave}>Save</Button>
+                </FormControl>
               )
             }
             }
