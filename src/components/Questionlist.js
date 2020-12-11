@@ -28,22 +28,24 @@ function Questionlist(props) {
    setOpen(false);
  };
 
- const handleSave = () => {
-  props.answerQ(answer[Object.keys(answer)]);
-   
-  handleReset();
+ const handleSave = (index) => {
+   // props.answerQ(answer[Object.keys(answer)]);
+   props.answerQ(answer[index]);
+   console.log('id:', index);
+  
+  // handleReset();
 
   console.log(answer);
-  console.log(answer[0])
+  console.log(answer[index])
   console.log('answer', answer)
   console.log(answer[Object.keys(answer)])
 
   //console.log(Object.keys(answer))
 }
-
+/*
 const handleReset = () => {
   setAnswer({});
-}
+}*/
 
   return (
     <div>
@@ -54,19 +56,21 @@ const handleReset = () => {
         <DialogTitle id="form-dialog-title">{props.params.surveyHeader}</DialogTitle>
         <DialogContent>
         {
-        questions.map((q, index) => { 
+        questions.map((q, questionIndex) => { 
           if(q.questionType.questionTypeId === 2) {
             return (
               <TextField
-                key={index}
+                key={`text-field-${questionIndex}`}
                 margin="dense"
                 name="answerBody"
                 label={q.questionBody}
-                
-                value={answer[index] ? answer[index].answerBody : ''}
+                //haetaan indexillä answeria. Jos indexiä vastaava answer löytyy, asetetaan valueen sen answerin answerBody.
+                //jos answeria indexillä ei löydy, asetetaan valueen ''. Tämä sen takia, että lomaketta ladattaessa
+                //yhtään answeria ei ole muodostettu ja lomake hajoaisi ilman valueta
+                value={answer[questionIndex] ? answer[questionIndex].answerBody : ''}
                 onChange={(event) => {
                   const newAnswer = {
-                    [index]: {
+                    [questionIndex]: {
                       answerBody: event.target.value,
                       question: {
                         questionId: q.questionId,
@@ -84,7 +88,7 @@ const handleReset = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
-                      <Button color="default" onClick={handleSave}>
+                      <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>
                         Save
                       </Button>
                     </InputAdornment>
@@ -93,14 +97,14 @@ const handleReset = () => {
                 />
             )} else if(q.questionType.questionTypeId === 3) {
               return (
-                <FormControl component="fieldset">
+                <FormControl component="fieldset" key={`form-control-${questionIndex}`}>
                 <FormLabel component="legend">{q.questionBody}</FormLabel>
                 <RadioGroup aria-label="answerOptions" 
                 name="answerOptions" 
-                value={answer[index] ? answer[index].answerBody : ''}
+                value={answer[questionIndex] ? answer[questionIndex].answerBody : ''}
                 onChange={(event) => {
                   const newAnswer = {
-                    [index]: {
+                    [questionIndex]: {
                       answerBody: event.target.value,
                       question: {
                         questionId: q.questionId,
@@ -116,21 +120,22 @@ const handleReset = () => {
                 >
                   {
                   q.answerOptions.map((a, index) => 
-                    <FormControlLabel value={a.answerOptionBody} control={<Radio />} label={a.answerOptionBody}/>
+                    <FormControlLabel key={`form-control-label-${index}`} value={a.answerOptionBody} control={<Radio />} label={a.answerOptionBody}/>
                   )
                     }
                 </RadioGroup>
-                <Button color="default" onClick={handleSave}>Save</Button>
+                <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>Save</Button>
               </FormControl>
             )} else {
               return (
-                <FormControl component="fieldset">
+                <FormControl component="fieldset" key={`form-control-2-${questionIndex}`}>
                   <FormLabel component="legend">{q.questionBody}</FormLabel>
                   <FormGroup>
                   {
                   q.answerOptions.map((a, index) => 
                     /*<FormControlLabel value={a.answerOptionBody} control={<Radio />} label={a.answerOptionBody}/>*/
                     <FormControlLabel
+                    key={`form-control-label-2-${index}`}
                     control={
                     <Checkbox 
                     value={a.answerOptionBody}
@@ -140,7 +145,7 @@ const handleReset = () => {
                     name="answerOptions" 
                     onChange={(event) => {
                       const newAnswer = {
-                        [index]: {
+                        [questionIndex]: {
                           answerBody: event.target.value,
                           question: {
                             questionId: q.questionId,
@@ -159,7 +164,7 @@ const handleReset = () => {
                     )
                     }
                   </FormGroup>
-                  <Button color="default" onClick={handleSave}>Save</Button>
+                  <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>Save</Button>
                 </FormControl>
               )
             }
