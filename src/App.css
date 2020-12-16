@@ -2,6 +2,19 @@
   text-align: center;
 }
 
+.Jumbotron {
+  width: 50%;
+  margin: auto;
+}
+
+.Cont {
+  background-image:
+          url(https://images.unsplash.com/photo-1579389083123-53a622ebaec2?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-size: cover;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

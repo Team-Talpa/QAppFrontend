@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import Questionlist from './Questionlist';
 import Answerlist from './Answerlist';
 import Button from '@material-ui/core/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Container from 'react-bootstrap/Container';
+
 
 function Surveylist() {
   const [surveys, setSurveys] = useState([]);
@@ -33,25 +36,29 @@ function Surveylist() {
   }
   return (
     <div>
-            <table><tbody>
-            {
-            surveys.map((s, index) => 
-              <tr key={index}>
-                <td>{s.surveyHeader}</td>
-                <td><Questionlist params={s} answerQ={answerQuestion}/></td>
-                <td><Button variant="outlined" color="primary" onClick={() => {
-                  ReactDOM.render(
-                    <Answerlist params={s} />,
-                    document.getElementById('root')
-                  );
-                }}>
-                  View answers
+      <Container fluid className='Cont'>
+    <Jumbotron>
+        <table><tbody>
+        {
+        surveys.map((s, index) => 
+          <tr key={index}>
+            <td>{s.surveyHeader}</td>
+            <td><Questionlist params={s} answerQ={answerQuestion}/></td>
+            <td><Button variant="outlined" color="primary" onClick={() => {
+              ReactDOM.render(
+                <Answerlist params={s} />,
+                document.getElementById('root')
+              );
+            }}>
+              View answers
 
-                </Button></td>
-              </tr>)
-            }
-            </tbody></table>
-    </div>
+            </Button></td>
+          </tr>)
+        }
+        </tbody></table>
+        </Jumbotron>
+        </Container>
+        </div>
   );
 }
 
