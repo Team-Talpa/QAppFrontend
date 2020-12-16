@@ -88,7 +88,9 @@ const handleReset = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
-                      
+                      <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>
+                        Save
+                      </Button>
                     </InputAdornment>
                      ),
                     }}
