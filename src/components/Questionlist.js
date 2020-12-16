@@ -60,6 +60,7 @@ const handleReset = () => {
           if(q.questionType.questionTypeId === 2) {
             return (
               <TextField
+                style={{ marginBottom: '5%'}}
                 key={`text-field-${questionIndex}`}
                 margin="dense"
                 name="answerBody"
@@ -88,12 +89,13 @@ const handleReset = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position='end'>
-                      <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>
+                      <Button className='DialogButton' color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>
                         Save
                       </Button>
                     </InputAdornment>
                      ),
                     }}
+
                 />
             )} else if(q.questionType.questionTypeId === 3) {
               return (
@@ -124,7 +126,7 @@ const handleReset = () => {
                   )
                     }
                 </RadioGroup>
-                <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>Save</Button>
+                <Button className='DialogButton' color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>Save</Button>
               </FormControl>
             )} else {
               return (
@@ -164,7 +166,7 @@ const handleReset = () => {
                     )
                     }
                   </FormGroup>
-                  <Button color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>Save</Button>
+                  <Button className='DialogButton' color="default" id={questionIndex} onClick={() => handleSave(questionIndex)}>Save</Button>
                 </FormControl>
               )
             }
