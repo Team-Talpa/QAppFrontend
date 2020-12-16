@@ -1,5 +1,14 @@
-.App {
-  text-align: center;
+.DialogButton {
+  width: 30%;
+}
+
+.Jumbotron {
+  width: fit-content;
+  margin: auto;
+}
+
+.Helper {
+  margin-bottom: 10%;
 }
 
 .App-logo {
